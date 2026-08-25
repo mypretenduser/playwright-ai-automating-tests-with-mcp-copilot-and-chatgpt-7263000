@@ -1,0 +1,72 @@
+- generic [ref=e17]:
+  - banner [ref=e18]:
+    - generic [ref=e19]:
+      - img "BuggyBoard" [ref=e21]
+      - heading "BuggyBoard" [level=1] [ref=e22]
+    - generic [ref=e23]:
+      - search "Search bugs by title" [ref=e25]
+      - button "New Bug" [ref=e27] [cursor=pointer]
+      - button "Logout" [ref=e29] [cursor=pointer]
+  - main [ref=e30]:
+    - generic [ref=e31]:
+      - group "Filter by bug state" [ref=e33]:
+        - button "Open" [ref=e34] [cursor=pointer]
+        - button "Closed" [ref=e35] [cursor=pointer]
+      - table "Bugs" [ref=e38]:
+        - rowgroup [ref=e39]:
+          - row [ref=e40]:
+            - columnheader [ref=e41]:
+              - button "ID" [ref=e42] [cursor=pointer]
+            - columnheader [ref=e44]:
+              - button "Severity" [ref=e45] [cursor=pointer]:
+                - text: Severity
+                - generic [ref=e46]: ↓
+            - columnheader [ref=e47]:
+              - button "Title" [ref=e48] [cursor=pointer]
+            - columnheader [ref=e50]:
+              - button "Owner" [ref=e51] [cursor=pointer]
+        - rowgroup [ref=e53]:
+          - button [ref=e54] [cursor=pointer]:
+            - cell "2" [ref=e55]
+            - cell "HIGH" [ref=e56]
+            - cell "bug one" [ref=e58]
+            - cell "buggy" [ref=e59]
+          - button [ref=e60] [cursor=pointer]:
+            - cell "3" [ref=e61]
+            - cell "MID" [ref=e62]
+            - cell "bug two" [ref=e64]
+            - cell "buggy" [ref=e65]
+  - dialog [ref=e66]:
+    - generic [ref=e68]:
+      - generic [ref=e69]:
+        - 'heading "Edit bug #2" [level=2] [ref=e70]'
+        - button "Close" [ref=e71] [cursor=pointer]: ×
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - generic [ref=e75]: ID
+          - textbox "ID" [ref=e76]: "2"
+        - generic [ref=e77]:
+          - generic [ref=e78]: Title
+          - textbox "Title" [active] [ref=e79]: bug one
+        - generic [ref=e80]:
+          - generic [ref=e81]: Severity
+          - combobox "Severity" [ref=e82]:
+            - option "HIGH" [selected]
+            - option "MID"
+            - option "LOW"
+        - generic [ref=e83]:
+          - generic [ref=e84]: State
+          - combobox "State" [ref=e85]:
+            - option "Open" [selected]
+            - option "Closed"
+        - generic [ref=e86]:
+          - generic [ref=e87]: Owner
+          - textbox "Owner" [ref=e88]: buggy
+        - generic [ref=e89]:
+          - generic [ref=e90]: Description
+          - textbox "Description" [ref=e91]: this is my first bug
+        - generic [ref=e92]:
+          - button "Delete" [ref=e93] [cursor=pointer]
+          - generic [ref=e94]:
+            - button "Cancel" [ref=e95] [cursor=pointer]
+            - button "Save" [disabled] [ref=e96]

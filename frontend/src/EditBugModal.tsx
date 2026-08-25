@@ -50,6 +50,7 @@ export function EditBugModal({ bug, onClose, onSaved }: EditBugModalProps) {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   const isOpen = bug !== null;
@@ -64,6 +65,7 @@ export function EditBugModal({ bug, onClose, onSaved }: EditBugModalProps) {
       setValidationErrors([]);
       setLoading(false);
       setDeleting(false);
+      setConfirmDeleteOpen(false);
       queueMicrotask(() => titleInputRef.current?.focus());
     }
   }, [bug]);
@@ -73,12 +75,16 @@ export function EditBugModal({ bug, onClose, onSaved }: EditBugModalProps) {
     function handleEscape(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.preventDefault();
+        if (confirmDeleteOpen) {
+          setConfirmDeleteOpen(false);
+          return;
+        }
         onClose();
       }
     }
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, [isOpen, onClose]);
+  }, [confirmDeleteOpen, isOpen, onClose]);
 
   const initial = bug
     ? {
@@ -163,21 +169,35 @@ export function EditBugModal({ bug, onClose, onSaved }: EditBugModalProps) {
     onClose();
   }
 
-  async function handleDelete() {
+  function handleDeleteRequest() {
+    if (loading || deleting || !bug) return;
+    setValidationErrors([]);
+    setConfirmDeleteOpen(true);
+  }
+
+  function handleDeleteCancel() {
+    setConfirmDeleteOpen(false);
+    setValidationErrors([]);
+  }
+
+  async function handleDeleteConfirm() {
     if (!bug || deleting || loading) return;
     setDeleting(true);
     setValidationErrors([]);
     try {
       const res = await fetch(`/api/bugs/${bug.id}`, { method: "DELETE" });
       if (res.ok) {
+        setConfirmDeleteOpen(false);
         onSaved();
         onClose();
         return;
       }
       const data = (await res.json().catch(() => ({}))) as { message?: string };
       setValidationErrors([data.message ?? "Failed to delete bug."]);
+      setConfirmDeleteOpen(false);
     } catch {
       setValidationErrors(["Something went wrong. Please try again."]);
+      setConfirmDeleteOpen(false);
     } finally {
       setDeleting(false);
     }
@@ -311,7 +331,7 @@ export function EditBugModal({ bug, onClose, onSaved }: EditBugModalProps) {
           <div className="flex gap-3 justify-between pt-2">
             <button
               type="button"
-              onClick={handleDelete}
+              onClick={handleDeleteRequest}
               className="rounded px-4 py-2 text-sm font-medium text-red-700 border border-red-200 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading || deleting}
             >
@@ -329,15 +349,63 @@ export function EditBugModal({ bug, onClose, onSaved }: EditBugModalProps) {
               <button
                 type="submit"
                 className="rounded px-4 py-2 text-sm font-medium text-stone-800 bg-primary hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={saveDisabled || deleting}
-            >
-              {loading ? "Saving…" : "Save"}
+                disabled={saveDisabled || deleting}
+              >
+                {loading ? "Saving…" : "Save"}
               </button>
             </div>
           </div>
         </form>
       </div>
       </div>
+      {confirmDeleteOpen && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-stone-900/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="confirm-delete-bug-title"
+        >
+          <div className="w-full max-w-md rounded-lg border border-stone-200 bg-white shadow-lg">
+            <div className="flex items-center justify-between gap-2 border-b border-stone-200 px-6 py-4">
+              <h2 id="confirm-delete-bug-title" className="text-lg font-semibold text-stone-800">
+                Delete bug?
+              </h2>
+              <button
+                type="button"
+                onClick={handleDeleteCancel}
+                className="rounded p-1 text-stone-500 hover:bg-stone-100 hover:text-stone-700 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                aria-label="Close delete confirmation"
+              >
+                <span className="sr-only">Close</span>
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="space-y-4 px-6 py-4">
+              <p className="text-sm text-stone-700">
+                This will permanently delete bug #{bug.id} ({bug.title}). This action cannot be undone.
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={handleDeleteCancel}
+                  className="rounded px-4 py-2 text-sm font-medium text-stone-700 bg-stone-200 hover:bg-stone-300 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 disabled:opacity-50"
+                  disabled={deleting}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeleteConfirm}
+                  className="rounded px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={deleting}
+                >
+                  {deleting ? "Deleting…" : "Delete bug"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
