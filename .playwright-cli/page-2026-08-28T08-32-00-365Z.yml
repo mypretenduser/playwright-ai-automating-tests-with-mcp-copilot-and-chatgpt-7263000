@@ -1,0 +1,69 @@
+- generic [ref=e17]:
+  - banner [ref=e18]:
+    - generic [ref=e19]:
+      - img "BuggyBoard" [ref=e21]
+      - heading "BuggyBoard" [level=1] [ref=e22]
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - search "Search bugs by title" [ref=e25]: Video flow bug 20260828083100
+        - button "Clear search" [ref=e85] [cursor=pointer]: ×
+      - button "New Bug" [ref=e27] [cursor=pointer]
+      - button "Logout" [ref=e29] [cursor=pointer]
+  - main [ref=e30]:
+    - generic [ref=e31]:
+      - group "Filter by bug state" [ref=e33]:
+        - button "Open" [ref=e34] [cursor=pointer]
+        - button "Closed" [ref=e35] [cursor=pointer]
+      - table "Bugs" [ref=e38]:
+        - rowgroup [ref=e39]:
+          - row [ref=e40]:
+            - columnheader [ref=e41]:
+              - button "ID" [ref=e42] [cursor=pointer]
+            - columnheader [ref=e44]:
+              - button "Severity" [ref=e45] [cursor=pointer]:
+                - text: Severity
+                - generic [ref=e46]: ↓
+            - columnheader [ref=e47]:
+              - button "Title" [ref=e48] [cursor=pointer]
+            - columnheader [ref=e50]:
+              - button "Owner" [ref=e51] [cursor=pointer]
+        - rowgroup [ref=e53]:
+          - button [ref=e79] [cursor=pointer]:
+            - cell "61" [ref=e80]
+            - cell "HIGH" [ref=e81]
+            - cell "Video flow bug 20260828083100" [ref=e83]
+            - cell "buggy" [ref=e84]
+  - dialog [ref=e86]:
+    - generic [ref=e88]:
+      - generic [ref=e89]:
+        - 'heading "Edit bug #61" [level=2] [ref=e90]'
+        - button "Close" [ref=e91] [cursor=pointer]: ×
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - generic [ref=e95]: ID
+          - textbox "ID" [ref=e96]: "61"
+        - generic [ref=e97]:
+          - generic [ref=e98]: Title
+          - textbox "Title" [active] [ref=e99]: Video flow bug 20260828083100
+        - generic [ref=e100]:
+          - generic [ref=e101]: Severity
+          - combobox "Severity" [ref=e102]:
+            - option "HIGH" [selected]
+            - option "MID"
+            - option "LOW"
+        - generic [ref=e103]:
+          - generic [ref=e104]: State
+          - combobox "State" [ref=e105]:
+            - option "Open"
+            - option "Closed" [selected]
+        - generic [ref=e106]:
+          - generic [ref=e107]: Owner
+          - textbox "Owner" [ref=e108]: buggy
+        - generic [ref=e109]:
+          - generic [ref=e110]: Description
+          - textbox "Description" [ref=e111]: Video workflow validation for login, create, open, and close state.
+        - generic [ref=e112]:
+          - button "Delete" [ref=e113] [cursor=pointer]
+          - generic [ref=e114]:
+            - button "Cancel" [ref=e115] [cursor=pointer]
+            - button "Save" [ref=e116] [cursor=pointer]

@@ -1,0 +1,54 @@
+- generic [ref=e17]:
+  - banner [ref=e18]:
+    - generic [ref=e19]:
+      - img "BuggyBoard" [ref=e21]
+      - heading "BuggyBoard" [level=1] [ref=e22]
+    - generic [ref=e23]:
+      - search "Search bugs by title" [ref=e25]
+      - button "New Bug" [ref=e27] [cursor=pointer]
+      - button "Logout" [ref=e29] [cursor=pointer]
+  - main [ref=e30]:
+    - generic [ref=e31]:
+      - group "Filter by bug state" [ref=e33]:
+        - button "Open" [ref=e34] [cursor=pointer]
+        - button "Closed" [ref=e35] [cursor=pointer]
+      - table "Bugs" [ref=e38]:
+        - rowgroup [ref=e39]:
+          - row [ref=e40]:
+            - columnheader [ref=e41]:
+              - button "ID" [ref=e42] [cursor=pointer]
+            - columnheader [ref=e44]:
+              - button "Severity" [ref=e45] [cursor=pointer]:
+                - text: Severity
+                - generic [ref=e46]: ↓
+            - columnheader [ref=e47]:
+              - button "Title" [ref=e48] [cursor=pointer]
+            - columnheader [ref=e50]:
+              - button "Owner" [ref=e51] [cursor=pointer]
+        - rowgroup [ref=e53]:
+          - row [ref=e54]:
+            - cell "No bugs matched." [ref=e55]
+  - dialog [ref=e56]:
+    - generic [ref=e58]:
+      - generic [ref=e59]:
+        - heading "Create bug" [level=2] [ref=e60]
+        - button "Close" [ref=e61] [cursor=pointer]: ×
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e65]: Title
+          - textbox "Title" [active] [ref=e66]: Video flow bug 20260828083100
+        - generic [ref=e67]:
+          - generic [ref=e68]: Severity
+          - combobox "Severity" [ref=e69]:
+            - option "HIGH" [selected]
+            - option "MID"
+            - option "LOW"
+        - generic [ref=e70]:
+          - generic [ref=e71]: Owner
+          - textbox "Owner" [ref=e72]: buggy
+        - generic [ref=e73]:
+          - generic [ref=e74]: Description
+          - textbox "Description" [ref=e75]
+        - generic [ref=e76]:
+          - button "Cancel" [ref=e77] [cursor=pointer]
+          - button "Save" [ref=e78] [cursor=pointer]

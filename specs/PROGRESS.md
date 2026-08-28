@@ -131,4 +131,13 @@ Checklists are updated as each feature is completed. After each feature, the AI 
 
 ---
 
+## Testing: REST API coverage
+
+- [x] Backend endpoint audit complete (`/api/health`, `/api/login`, `/api/bugs`, `/api/bugs/:id`)
+- [x] Positive and negative API cases documented for all routes
+- [x] Test plan saved to `specs/testing/rest-api-test-plan.md`
+- [x] Progress updated for the testing artifact
+
+---
+
 _(Add one section per feature; copy the checklist template above.)_
